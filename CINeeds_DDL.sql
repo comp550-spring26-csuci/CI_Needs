@@ -21,3 +21,8 @@ postDate DATE,
 offerExpDate DATE, --can be null if not an offer
 PRIMARY KEY (postID),
 FOREIGN KEY (userId) REFERENCES CIN_User(userID));
+
+--Add imagePath and contact to CIN_Post table
+ALTER TABLE CIN_Post
+ADD COLUMN imagePath VARCHAR(255) DEFAULT NULL,
+ADD COLUMN contact   VARCHAR(255) DEFAULT NULL;
