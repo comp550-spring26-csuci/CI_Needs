@@ -88,6 +88,7 @@
     .respond-btn { background: var(--blue); color: white; border: none; padding: 6px 16px; border-radius: 4px; font-size: 0.82rem; font-weight: 600; cursor: pointer; font-family: 'Source Sans 3', sans-serif; transition: background 0.2s; }
     .respond-btn:hover { background: var(--blue-dark); }
     .urgent-badge { background: var(--crimson); color: white; font-size: 0.7rem; font-weight: 700; padding: 2px 8px; border-radius: 3px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .need-card-image img { display: block; max-width: 100%; height: auto; border-radius: 4px; margin: 8px 0 12px; }
 
     /* ── SUBMIT FORM ── */
     .submit-panel { background: white; border: 1px solid var(--light-gray); border-radius: 6px; padding: 22px; margin-bottom: 24px; }
@@ -221,11 +222,24 @@
             #get category for html tags
             $category = $row["category"];
             $uc_category = ucfirst( $category );
+
+            # optional image HTML
+            $image_html = '';
+            if (!empty($row['imagePath'])) {
+                $safe_image = htmlspecialchars($row['imagePath'], ENT_QUOTES, 'UTF-8');
+                $safe_alt   = htmlspecialchars($row['postTitle'], ENT_QUOTES, 'UTF-8');
+                $image_html = "<div class=\"need-card-image\">
+                    <img src=\"{$safe_image}\" alt=\"{$safe_alt}\" />
+                </div>";
+            }
+
             #html text for one card with info filled in
             $post_html = "<div class=\"need-card\">
             <div class=\"need-card-top\">
             <div><h3>{$row['postTitle']}</h3>
-            </div><span class=\"tag tag-$category\">$uc_category</span></div>
+            </div><span class=\"tag tag-$category\">$uc_category</span>
+            </div>
+            {$image_html}
             <p>{$row['postData']}</p>
             <div class=\"need-card-meta\">
             <span>Posted on {$row['postDate']} · {$row['username']}</span></div></div>";
