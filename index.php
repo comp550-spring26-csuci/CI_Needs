@@ -228,7 +228,7 @@
             </div><span class=\"tag tag-$category\">$uc_category</span></div>
             <p>{$row['postData']}</p>
             <div class=\"need-card-meta\">
-            <span>Posted 2 hours ago · {$row['username']}</span></div></div>";
+            <span>Posted on {$row['postDate']} · {$row['username']}</span></div></div>";
             #write post card to webpage
             echo $post_html;
           }
