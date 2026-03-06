@@ -138,17 +138,19 @@ try {
     );
 
     $stmt = $db->prepare(
-        "INSERT INTO $table (userID, category, postTitle, postData, contact, imagePath)
-         VALUES (:userID, :category, :postTitle, :postData, :contact, :imagePath)"
+        "INSERT INTO $table (userID, category, postTitle, postData, contact, imagePath, postDate, offerExpDate)
+         VALUES (:userID, :category, :postTitle, :postData, :contact, :imagePath, :postDate, :offerExpDate)"
     );
 
     $stmt->execute([
-        ":userID"    => $userID,
-        ":category"  => $category,
-        ":postTitle" => $postTitle,
-        ":postData"  => $postData,
-        ":contact"   => $contact !== "" ? $contact : null,
-        ":imagePath" => $imagePath,
+        ":userID"       => $userID,
+        ":category"     => $category,
+        ":postTitle"    => $postTitle,
+        ":postData"     => $postData,
+        ":contact"      => $contact !== "" ? $contact : null,
+        ":imagePath"    => $imagePath,
+        ":postDate"     => date('Y-m-d'),
+        ":offerExpDate" => null,
     ]);
 
     $newPostID = (int) $db->lastInsertId();
