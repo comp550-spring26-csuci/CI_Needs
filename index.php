@@ -208,7 +208,7 @@
         #sql server login info
         $host = "127.0.0.1";
         $user = "root";
-        $password = "Illumination";
+        $password = "";
         $database = "CINeeds";
         #sql table and foreign key info
         $table = "CIN_Post";
