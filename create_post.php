@@ -1,9 +1,9 @@
 <?php
 /* ── Configuration ── */
-$host     = "127.0.0.1";
-$user     = "root";
-$password = "";
-$database = "CINeeds";
+$host = "137.184.46.194";
+$user = "cineedsc_sky";
+$password = "N3ph@ndus";
+$database = "cineedsc_db";
 
 $table      = "CIN_Post";
 $uploadDir  = __DIR__ . "/uploads/posts/";
@@ -17,13 +17,8 @@ $allowedTypes = [
 ];
 $allowedCategories = [
     "food",
-    "clothing",
-    "electronics",
-    "books",
-    "hygiene",
     "housing",
     "financial",
-    "transport",
     "health",
     "academic",
     "other",
