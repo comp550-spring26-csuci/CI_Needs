@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f0ece4;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .card {
+      background: #f0ece4;
+      padding: 40px;
+      width: 100%;
+      max-width: 480px;
+      border-radius: 8px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      font-size: 16px;
+      color: #3a3535;
+      margin-bottom: 8px;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid #d8d0c8;
+      border-radius: 6px;
+      font-size: 15px;
+      background: #fff;
+      color: #333;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      border-color: #4a7fa5;
+    }
+
+    .forgot-link {
+      display: block;
+      text-align: right;
+      margin-top: 6px;
+      font-size: 13px;
+      color: #4a7fa5;
+      text-decoration: none;
+    }
+
+    .forgot-link:hover {
+      text-decoration: underline;
+    }
+
+    .btn-login {
+      width: 100%;
+      padding: 16px;
+      background-color: #4a7fa5;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background-color 0.2s;
+    }
+
+    .btn-login:hover {
+      background-color: #3a6a8e;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="you@example.com" autocomplete="email">
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="••••••••" autocomplete="current-password">
+      <a href="#" class="forgot-link">Forgot my password</a>
+    </div>
+
+    <button class="btn-login" onclick="handleLogin()">Login</button>
+  </div>
+
+  <script>
+    function handleLogin() {
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      if (!email || !password) {
+        alert('Please enter your email and password.');
+        return;
+      }
+
+      // this section with be replaced with real auth logic in future sprints
+      console.log('Login attempted for:', email);
+    }
+  </script>
+</body>
+</html>
