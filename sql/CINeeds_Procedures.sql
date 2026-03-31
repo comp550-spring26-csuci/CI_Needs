@@ -1,0 +1,10 @@
+USE cineedsc_db;
+
+DROP PROCEDURE IF EXISTS ban_user;
+DELIMITER //
+CREATE PROCEDURE ban_user (IN inUserID INT) BEGIN UPDATE CIN_User SET banned = TRUE WHERE userID = inUserID; END//
+DELIMITER ;
+
+SELECT * FROM CIN_User;
+CALL ban_user(1);
+SELECT * FROM CIN_User;
