@@ -1,6 +1,6 @@
 USE cineedsc_db;
 
-INSERT INTO CIN_User VALUES
+INSERT INTO CIN_User (userID, username, password) VALUES 
 (1, "John Doe", "1234"),
 (2, "Mary Jane", "QWERTY"),
 (3, "Bob Robert", "password1");
