@@ -25,3 +25,14 @@ contact   VARCHAR(255) DEFAULT NULL,
 flagCount INT DEFAULT 0,
 PRIMARY KEY (postID),
 FOREIGN KEY (userId) REFERENCES CIN_User(userID));
+
+CREATE TABLE CIN_Reply (
+    replyID INT AUTO_INCREMENT,
+    userID INT,
+    postID INT,
+    replyData TINYTEXT,
+    replyDate DATE,
+    PRIMARY KEY (replyID),
+    FOREIGN KEY (userID) REFERENCES CIN_User (userID),
+    FOREIGN KEY (postID) REFERENCES CIN_Post (postID)
+)
