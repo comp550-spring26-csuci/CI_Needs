@@ -1,4 +1,5 @@
 <?php
+session_start();
 // ── Database connection + all queries run once at the top ──
 $host      = "137.184.46.194";
 $user      = "cineedsc_sky";
@@ -372,6 +373,27 @@ try {
               $safe_email = htmlspecialchars($post_row['email'],     ENT_QUOTES, 'UTF-8');
               $safe_date  = htmlspecialchars($post_row['postDate'],  ENT_QUOTES, 'UTF-8');
               $post_id    = (int)$post_row['postID'];
+
+              $isFlagged = false;
+
+              if (isset($_SESSION['userID'])) {
+
+                  $flag_check = $db->prepare("
+                      SELECT flagID
+                      FROM CIN_Flag
+                      WHERE postID = ?
+                      AND userID = ?
+                  ");
+
+                  $flag_check->execute([
+                      $post_id,
+                      $_SESSION['userID']
+                  ]);
+
+                  if ($flag_check->fetch()) {
+                      $isFlagged = true;
+                  }
+              }
             ?>
             <div class="<?= $card_class ?>">
               <div class="need-card-top">
@@ -393,7 +415,11 @@ try {
               <div class="need-card-meta">
                 <span>Posted on <?= $safe_date ?> · <?= $safe_user ?> (<?= $safe_email ?>)</span>
                 <button class="respond-btn">Respond</button>
-                <button class="flag-btn" onclick="openFlagModal(this)" title="Flag this post"> Flag</button>
+                <?php if ($isFlagged): ?>
+                    <button class="flag-btn flagged" disabled> Flagged</button>
+                <?php else: ?>
+                    <button class="flag-btn" onclick="openFlagModal(this, <?= $post_id ?>)" title="Flag this post"> Flag</button>
+                <?php endif; ?>
               </div>
 
               <!-- Comments Section -->
@@ -698,8 +724,10 @@ try {
 
     // ── Flag modal ──
     let currentFlagBtn = null;
-    function openFlagModal(btn) {
+    let currentPostID = null;
+    function openFlagModal(btn, postID) {
       currentFlagBtn = btn;
+      currentPostID = postID;
       document.getElementById('flagReason').value  = '';
       document.getElementById('flagComment').value = '';
       document.getElementById('flagModal').classList.add('open');
@@ -710,16 +738,48 @@ try {
       document.body.style.overflow = '';
     }
     function submitFlag() {
+
       const reason = document.getElementById('flagReason').value;
-      if (!reason) { alert('Please select a reason for flagging.'); return; }
-      // TODO: POST to flag endpoint
-      closeFlagModal();
-      if (currentFlagBtn) {
-        currentFlagBtn.textContent = ' Flagged';
-        currentFlagBtn.classList.add('flagged');
-        currentFlagBtn.disabled = true;
+      const comment = document.getElementById('flagComment').value;
+      if (!reason) {
+        alert('Please select a reason for flagging.');
+        return;
       }
-      showToast(' Post reported. Thank you — our team will review it.');
+      const formData = new FormData();
+      formData.append('postID', currentPostID);
+      formData.append('flagReason', reason);
+      formData.append('flagComment', comment);
+      fetch('flag_post.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+
+        if (data.success) {
+          closeFlagModal();
+
+          if (currentFlagBtn) {
+            currentFlagBtn.textContent = ' Flagged';
+            currentFlagBtn.classList.add('flagged');
+            currentFlagBtn.disabled = true;
+          }
+
+          showToast(' Post reported successfully.');
+
+          setTimeout(() => {
+            location.reload();
+          }, 500);
+
+        } else {
+          alert(data.message);
+        }
+
+      })
+      .catch(error => {
+        console.error(error);
+        alert('Failed to submit report.');
+      });
     }
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeFlagModal(); });
 
