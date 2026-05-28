@@ -137,14 +137,11 @@ This section summarizes the key engineering decisions and implementations for po
 - [x] Community guidelines with tiered consequence system
 - [x] Git branching workflow with pull requests
 - [x] Deployed to live server
+- [x] Registration / account creation flow
+- [x] Full advanced search connected to backend
+- [x] Admin functions: ban, delete, restore
+- [x] Post functions: edit, delete, fulfilled
 
-## In Progress / Future Work
-
-- [ ] Direct messaging between users
-- [ ] Email notification system (expiration reminders, message alerts)
-- [ ] Full advanced search connected to backend
-- [ ] Registration / account creation flow
-- [ ] Password reset
 
 ---
 
